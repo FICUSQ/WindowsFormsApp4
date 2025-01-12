@@ -41,14 +41,22 @@ namespace WindowsFormsApp4
 
                             }
                     }
+                    List<string> PH = new List<string>();
+                    int count = 0;
+                   
 
-                    using(FileStream stream1 = new FileStream("NEW PATH", FileMode.CreateNew))
-                    {
-                      
+
+                        List<int> files_Length = new List<int>();
                         for (int i = 0; i < AllPath.Count; i++)
                         {
-                            int count = 0;
+                            files_Length.Add(AllPath[i].Length);
+                        }
+
+                        for (int i = 0; i < AllPath.Count; i++)
+                        {
+                          
                             FileInfo fileInfo1 = new FileInfo(AllPath[i]);
+
 
                             for(int j = 0; j < AllPath.Count; j++)
                             {
@@ -56,31 +64,27 @@ namespace WindowsFormsApp4
 
                                 if (fileInfo1.Length == fileInfo2.Length)
                                 {
-                                    count++;
+                                    if (!files_Length.Contains(int.Parse(fileInfo1.Length.ToString())))
+                                    {
+                                        files_Length.Add(int.Parse(fileInfo1.Length.ToString()));
+                                        string TXT = textBox2.Text;
+
+                                        string fileName = Path.GetFileName(AllPath[i]);
+                                        string newFilePath = Path.Combine(TXT, fileName);
+
+                                        Directory.CreateDirectory(TXT);
+                                        string extencion = Path.GetExtension(AllPath[i]);
+                                        string last_path = Path.Combine(textBox2.Text,extencion);
+
+
+                                        count++;
+                                        File.Copy(AllPath[i],newFilePath);
+                                        label4.Text += newFilePath+"\n";
+                                   
                                 }
-                                if (count > 1)
-                                {
-                                    All__.Add(AllPath[i]);
-                                    break;
-                                }
-                              
+                                }   
                             }
-                            if(count > 1)
-                            {
-
-                            }
-
                         }
-
-                    }
-                        for (int i = 0;i < All__.Count; i++)
-                        {
-                        //  File.WriteAllText("NEW PATH", All__.ElementAt(i));
-                        File.Move();
-                        }
-
-
-
                 }
                 else
                 {
